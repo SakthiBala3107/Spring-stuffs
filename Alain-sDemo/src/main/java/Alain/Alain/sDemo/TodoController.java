@@ -5,26 +5,44 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/todo")
 public class TodoController {
+
     @GetMapping("/get")
-    String Todo(){
-        return "Toda";
+    public String todo() {
+        return "Todo";
     }
 
-//    path variable
     @GetMapping("/{id}")
-    String getTodoById(@PathVariable int id){
-      return String.valueOf(id);
-    }
-
-    //request param
-
-    @GetMapping
-    String getTodoByParam(@RequestParam("todoId") int id){
+    public String getTodoById(@PathVariable int id) {
         return String.valueOf(id);
     }
 
-    @GetMapping("/create")
-    String createUser(@RequestParam("name" ) String name, @RequestParam("password") String password){
-        return "Name:" +name+"password:" + password;
+    @GetMapping
+    public String getTodoByParam(@RequestParam("todoId") int id) {
+        return String.valueOf(id);
     }
+
+    @GetMapping("/createUser")
+    public String createUser(@RequestParam("name") String name, @RequestParam("password") String password) {
+
+        return "Name: " + name + " password: " + password;
+    }
+
+    @PostMapping("/create")
+    public Object create(@RequestBody Object body) {
+        return body;
+    }
+
+    @PutMapping("/{id}")
+    public String updateUserById(@PathVariable int id) {
+        return String.valueOf(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteUserById(@PathVariable int id){
+        return String.valueOf(id);
+    }
+
+
+//
 }
+

@@ -10,55 +10,52 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/todo")
-
 public class TodoController {
 
-    //
     @Autowired
     private TodoService todoService;
 
-    //create new todo
-    @PostMapping("/create")
-    public ResponseEntity<Todo> createUser(@RequestBody Todo data) {
-        return new ResponseEntity<>(todoService.createTodo(data), HttpStatus.CREATED);
-
-
+    // CREATE TODO
+    @PostMapping
+    public ResponseEntity<Todo> createTodo(@RequestBody Todo data) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(todoService.createTodo(data));
     }
 
-    //GetTod By id
+    // GET TODO BY ID
     @GetMapping("/{id}")
-    ResponseEntity<Todo> getTodoById(@PathVariable Long id) {
-        try {
-
-            return new ResponseEntity<>(todoService.getTodoById(id), HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-
+    public ResponseEntity<Todo> getTodoById(@PathVariable Long id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(todoService.getTodoById(id));
     }
 
-
-    //Get all todos
+    // GET ALL TODOS
     @GetMapping
-    ResponseEntity<List<Todo>> getTodos() {
-        try {
-            return new ResponseEntity<List<Todo>>(todoService.getTodos(), HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<Todo>> getTodos() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(todoService.getTodos());
     }
 
-
-    //update todo
+    // UPDATE TODO
     @PutMapping("/{id}")
-    ResponseEntity<Todo> updateTodo(@RequestBody Todo userPayload) {
-        return new ResponseEntity<>(todoService.updateTodo(userPayload), HttpStatus.OK);
+    public ResponseEntity<Todo> updateTodo(
+            @PathVariable Todo id
+//            @RequestBody Todo payload
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(todoService.updateTodo(id));
     }
 
-    //Delete Todo
+    // DELETE TODO
     @DeleteMapping("/{id}")
-    void deleteTodo(@PathVariable Long id){
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
         todoService.DeleteUser(id);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
-
 }

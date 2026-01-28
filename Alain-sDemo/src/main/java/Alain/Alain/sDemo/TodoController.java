@@ -1,6 +1,7 @@
 package Alain.Alain.sDemo;
 
 import Alain.Alain.sDemo.models.Todo;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,47 +16,48 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    // CREATE TODO
-    @PostMapping
+
+    //Create user
+    @PostMapping("/create")
     public ResponseEntity<Todo> createTodo(@RequestBody Todo data) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(todoService.createTodo(data));
     }
 
-    // GET TODO BY ID
+    //Get user via id
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> getTodoById(@PathVariable Long id) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoService.getTodoById(id));
+    public ResponseEntity<Todo> getUserById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.getTodoById(id));
     }
 
-    // GET ALL TODOS
+    //    Get all Todos
     @GetMapping
     public ResponseEntity<List<Todo>> getTodos() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoService.getTodos());
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.getTodos());
     }
 
-    // UPDATE TODO
+
+    //    update todo
     @PutMapping("/{id}")
     public ResponseEntity<Todo> updateTodo(
-            @PathVariable Todo id
-//            @RequestBody Todo payload
+            @PathVariable Long id,
+            @RequestBody Todo payload
     ) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoService.updateTodo(id));
+        return ResponseEntity.ok(todoService.updateTodo(id, payload));
     }
 
-    // DELETE TODO
+    //    delete todos
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
         todoService.DeleteUser(id);
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+        return ResponseEntity.noContent().build();
     }
+
+    //Pagination
+    @GetMapping("/pages")
+    ResponseEntity<Page<Todo>> getTodoPaged(@RequestParam int page, @RequestParam int size) {
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.getAllTodosPages(page, size))
+                ;
+    }
+
 }

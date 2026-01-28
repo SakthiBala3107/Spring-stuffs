@@ -2,6 +2,9 @@ package Alain.Alain.sDemo;
 
 import Alain.Alain.sDemo.models.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +33,7 @@ public class TodoService {
 
     //UPDATE TODD
 
-    public Todo updateTodo(Todo data) {
+    public Todo updateTodo(Long id, Todo data) {
         return todoRepository.save(data);
     }
 
@@ -39,4 +42,10 @@ public class TodoService {
         todoRepository.deleteById(userId);
     }
 
+
+    //    Pagination
+    public Page<Todo> getAllTodosPages(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return todoRepository.findAll(pageable);
+    }
 }

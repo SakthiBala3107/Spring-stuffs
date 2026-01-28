@@ -1,6 +1,9 @@
 package Alain.Alain.sDemo;
 
 import Alain.Alain.sDemo.models.Todo;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Slf4j
+
 @RequestMapping("/todo")
 public class TodoController {
 
@@ -26,6 +31,10 @@ public class TodoController {
 
     //Get user via id
     @GetMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "Todo fetched Successfully"),
+            @ApiResponse(responseCode = "404", description = "Todo Not Found")
+    })
     public ResponseEntity<Todo> getUserById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(todoService.getTodoById(id));
     }
@@ -50,6 +59,9 @@ public class TodoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
         todoService.DeleteUser(id);
+        log.info("");
+        log.warn("");
+        log.debug("");
         return ResponseEntity.noContent().build();
     }
 

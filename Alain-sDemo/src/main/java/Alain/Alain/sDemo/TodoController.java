@@ -1,16 +1,32 @@
 package Alain.Alain.sDemo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/todo")
+
 public class TodoController {
+
+    //
+    @Autowired
+    private TodoService todoService;
 
     @GetMapping("/get")
     public String todo() {
+
+        todoService.getTodo();
         return "Todo";
     }
 
+    @GetMapping("/access/DB")
+    String accessDB() {
+        return todoService.accessRepo();
+
+    }
+
+
+    //
     @GetMapping("/{id}")
     public String getTodoById(@PathVariable int id) {
         return String.valueOf(id);
@@ -38,7 +54,7 @@ public class TodoController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUserById(@PathVariable int id){
+    public String deleteUserById(@PathVariable int id) {
         return String.valueOf(id);
     }
 

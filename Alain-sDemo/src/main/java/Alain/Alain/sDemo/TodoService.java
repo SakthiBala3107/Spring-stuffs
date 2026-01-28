@@ -30,7 +30,7 @@ public class TodoService {
 
     //UPDATE TODD
 
-    public Todo updateTodo(Todo data) {
+    public Todo updateTodo(Long id, Todo data) {
         return todoRepository.save(data);
     }
 

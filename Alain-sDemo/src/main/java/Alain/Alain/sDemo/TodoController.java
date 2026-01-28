@@ -1,6 +1,7 @@
 package Alain.Alain.sDemo;
 
 import Alain.Alain.sDemo.models.Todo;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,13 @@ public class TodoController {
     public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
         todoService.DeleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //Pagination
+    @GetMapping("/pages")
+    ResponseEntity<Page<Todo>> getTodoPaged(@RequestParam int page, @RequestParam int size) {
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.getAllTodosPages(page, size))
+                ;
     }
 
 }

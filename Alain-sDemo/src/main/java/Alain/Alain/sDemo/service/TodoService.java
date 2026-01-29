@@ -1,5 +1,6 @@
-package Alain.Alain.sDemo;
+package Alain.Alain.sDemo.service;
 
+import Alain.Alain.sDemo.repository.TodoRepository;
 import Alain.Alain.sDemo.models.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

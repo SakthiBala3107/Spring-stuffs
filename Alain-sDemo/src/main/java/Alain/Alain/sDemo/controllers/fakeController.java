@@ -1,4 +1,4 @@
-package Alain.Alain.sDemo;
+package Alain.Alain.sDemo.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

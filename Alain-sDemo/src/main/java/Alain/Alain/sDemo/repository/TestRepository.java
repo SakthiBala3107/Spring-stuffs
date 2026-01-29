@@ -1,4 +1,4 @@
-package Alain.Alain.sDemo;
+package Alain.Alain.sDemo.repository;
 
 
 import org.springframework.stereotype.Component;
